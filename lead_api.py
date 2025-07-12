@@ -3,11 +3,11 @@ import pandas as pd
 import joblib
 import os
 
-# Load model
-model_path = os.path.join("model", "lead_scoring_model.pkl")
+# Load model from root directory
+model_path = "lead_scoring_model.pkl"
 model = joblib.load(model_path)
 
-# Define binary map (same as used during training)
+# Define binary map
 binary_map = {'Yes': 1, 'No': 0}
 binary_cols = ['Took_Exam', 'Visa_Knowledge', 'Language_Test_Willing', 'Follows_Intl_Edu_Content']
 
@@ -24,15 +24,16 @@ def predict_batch():
         data = request.get_json()
         df = pd.DataFrame(data)
 
-        # Apply any necessary preprocessing if not inside the pipeline
-        for col in ['Took_Exam', 'Visa_Knowledge', 'Language_Test_Willing', 'Follows_Intl_Edu_Content']:
+        # Preprocessing (only if not handled inside pipeline)
+        for col in binary_cols:
             if col in df.columns:
-                df[col] = df[col].map({'Yes': 1, 'No': 0}).fillna(0)
+                df[col] = df[col].map(binary_map).fillna(0)
 
-        # Predict
+        # Model predictions
         scores = model.predict_proba(df)[:, 1]
         preds = model.predict(df)
 
+        # Format response
         response = []
         for i in range(len(df)):
             response.append({
@@ -45,7 +46,6 @@ def predict_batch():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
 
 if __name__ == '__main__':
     app.run(debug=True)
