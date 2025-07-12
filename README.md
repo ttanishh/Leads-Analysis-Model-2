@@ -1,4 +1,20 @@
-# Lead Analysis Model (LAM)
+# Lead Analysis Model (LAM) --> This repository for API deployment. 
+
+##Deployed on Railway. 
+
+Go to https://railway.app
+
+Log in with GitHub
+
+Click New Project → Deploy from GitHub Repo
+
+Choose your Flask repo (the one with lead_api.py)
+
+Let it build and deploy automatically
+
+Once deployed, click on the Web tab and enable the service
+
+
 
 A machine learning-powered lead scoring system with a Flask API and Streamlit dashboard for analyzing and scoring potential leads.
 
