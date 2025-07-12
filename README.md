@@ -1,6 +1,6 @@
 # Lead Analysis Model (LAM) --> This repository for API deployment. 
 
-##Deployed on Railway. 
+## Deployed on Railway. 
 
 Go to https://railway.app
 
